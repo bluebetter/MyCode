@@ -15,6 +15,9 @@ void test_big_little_endian(){
 	short a = 1;
 	char c = *(char *)&a;
 	printf("%x\n", c);
+	if (c == 1){
+		cout<<"little endian.\n";
+	}
 	cout<<c<<endl;
 	int len = sizeof(a);
 	/*
@@ -39,11 +42,18 @@ void test_big_little_endian(){
 	printf("%x-%x", x0, x1);
 	cout<<(int)x0<<endl<<(int)x1<<endl;
 	*/
-
 }
 
 int main(){
-	test_big_little_endian();
+	//test_big_little_endian();
+	
+	//test for
+	for (int i=0; i<10; i++){
+		static int j = 1;
+		cout<<"i at:"<<&i<<"\t"<<i<<endl;
+		cout<<"j at:"<<&j<<"\t"<<j<<endl;
+		j = 2;
+	}
 
 	return 0;
 }
