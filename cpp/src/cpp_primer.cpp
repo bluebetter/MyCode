@@ -58,6 +58,27 @@ void test_6p2(){
 	}
 }
 
+/*
+ * 10.3.2
+ */
+void test_10p3p2(){
+	class Test{
+		int i;
+		public:
+		//Test(){ }
+		Test(int j){
+			//this->i = i;
+			i = j;
+		}
+		void show() const{
+			cout<<"i = "<<i<<endl;
+		}
+	};
+
+	const Test m_t2;
+	m_t2.show();
+}
+
 int main()
 {
 	cout<<"This is a file doing test for <C++ Primer Plus>\n";
@@ -75,6 +96,10 @@ int main()
 
 #ifdef TEST_6P2
 	test_6p2();
+#endif
+
+#ifdef TEST_10P3P2
+	test_10p3p2();
 #endif
 	return 0;
 }
