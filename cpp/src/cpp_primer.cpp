@@ -65,7 +65,7 @@ void test_10p3p2(){
 	class Test{
 		int i;
 		public:
-		//Test(){ }
+		Test(){ }
 		Test(int j){
 			//this->i = i;
 			i = j;
@@ -77,6 +77,48 @@ void test_10p3p2(){
 
 	const Test m_t2;
 	m_t2.show();
+}
+
+/*
+ * test class private
+ */
+void test_class(){
+	class Test{
+		private:
+			int i;
+	};
+	Test c_t;
+	//c_t.i = 1;
+	//cout<<"c_t.i = "<<c_t.i<<endl;	//Error
+}
+
+/*
+ * test 11.5.2
+ */
+	class Vector{
+		double x,y;
+		public:
+		Vector(){
+			x = y = 100;
+		}
+		Vector(double x, double y){
+			this->x = x;
+			this->y = y;
+		}
+		Vector operator-(const Vector &b)const;
+		void show(){
+			cout<<"x = "<<x<<","<<"y = "<<y<<endl;
+		}
+	};
+	Vector Vector::operator-(const Vector &b)const{
+		return Vector(x-b.x, y-b.y);
+	}
+void test_11p5p2(){
+
+	Vector v_a(10,10);
+	Vector v_b(6,6);
+	Vector v_c = v_a-v_b;
+	v_c.show();
 }
 
 int main()
@@ -100,6 +142,9 @@ int main()
 
 #ifdef TEST_10P3P2
 	test_10p3p2();
+#endif
+#ifdef TEST_11P5P2
+	test_11p5p2();
 #endif
 	return 0;
 }
