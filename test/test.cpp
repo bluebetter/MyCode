@@ -7,6 +7,7 @@
 
 #include<iostream>
 #include <stdio.h>
+#include <cstring>
 using namespace std;
 
 /*
@@ -44,16 +45,33 @@ void test_big_little_endian(){
 	*/
 }
 
-int main(){
-	//test_big_little_endian();
-	
-	//test for
+//test for
+void test_for(){
 	for (int i=0; i<10; i++){
 		static int j = 1;
 		cout<<"i at:"<<&i<<"\t"<<i<<endl;
 		cout<<"j at:"<<&j<<"\t"<<j<<endl;
 		j = 2;
 	}
+}
 
+int len = 102400000;
+void test_char(){
+	//char s[len];
+	char *s = new char[len];
+	if (!s){
+		cout<<"new error.\n";
+		return;
+	}
+	//memset(s, 0, len);
+	for (int i=0; i<len; i++){
+		cout<<(int)s[i]<<endl;
+		//printf("s[%d] = %c", i, s[i]);
+	}
+}
+
+int main(){
+	//test_big_little_endian();
+	test_char();
 	return 0;
 }
