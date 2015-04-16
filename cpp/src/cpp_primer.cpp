@@ -95,30 +95,57 @@ void test_class(){
 /*
  * test 11.5.2
  */
-	class Vector{
-		double x,y;
-		public:
-		Vector(){
-			x = y = 100;
-		}
-		Vector(double x, double y){
-			this->x = x;
-			this->y = y;
-		}
-		Vector operator-(const Vector &b)const;
-		void show(){
-			cout<<"x = "<<x<<","<<"y = "<<y<<endl;
-		}
-	};
-	Vector Vector::operator-(const Vector &b)const{
-		return Vector(x-b.x, y-b.y);
+class Vector{
+	double x,y;
+	public:
+	Vector(){
+		x = y = 100;
 	}
+	Vector(double x, double y){
+		this->x = x;
+		this->y = y;
+	}
+	Vector operator-(const Vector &b)const;
+	void show(){
+		cout<<"x = "<<x<<","<<"y = "<<y<<endl;
+	}
+};
+Vector Vector::operator-(const Vector &b)const{
+	return Vector(x-b.x, y-b.y);
+	//return Vector(b.x-x, b.y-y);		//result error
+}
 void test_11p5p2(){
 
 	Vector v_a(10,10);
 	Vector v_b(6,6);
 	Vector v_c = v_a-v_b;
 	v_c.show();
+}
+
+/*
+ */
+class Star{
+	string str;
+
+	public:
+	Star(){
+		str = "s";
+	};
+	Star & operator=(Star &s);
+	Star(string s);
+};
+Star::Star(string s){
+	str = s;
+}
+Star & Star::operator=(Star &s){
+	str = s.str;
+	return *this;
+}
+void test_13p8p2(){
+	Star t;
+	string s = "ac";
+	t = s;
+	//t = Star(s);
 }
 
 int main()
@@ -145,6 +172,10 @@ int main()
 #endif
 #ifdef TEST_11P5P2
 	test_11p5p2();
+#endif
+
+#ifdef TEST_13P8P2
+	test_13p8p2();
 #endif
 	return 0;
 }
