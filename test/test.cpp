@@ -6,9 +6,11 @@
  ************************************************************************/
 
 #include<iostream>
+#include <ext/hash_map>
 #include <stdio.h>
 #include <cstring>
 using namespace std;
+using namespace __gnu_cxx;
 
 /*
  */
@@ -70,8 +72,18 @@ void test_char(){
 	}
 }
 
+void test_hashmap(){
+	hash_map<char *, int> hmap;
+	hmap["a"] = 1;
+	hmap["a"] = 2;
+	//cout<<hmap.find("b")<<endl;
+	cout<<hmap["a"]<<endl;
+	cout<<sizeof(hmap)<<endl;
+}
+
 int main(){
 	//test_big_little_endian();
-	test_char();
+	//test_char();
+	test_hashmap();
 	return 0;
 }

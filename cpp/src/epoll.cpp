@@ -71,13 +71,18 @@ void event_del(int epollfd, myevent_s *ev){
 	}
 	epv.data.ptr = ev;
 	ev->status = 0;
-	epoll_ctl(epollfd, EPOLL_CTL_DEL, ev->fd, &epv);
+	if (epoll_ctl(epollfd, EPOLL_CTL_DEL, ev->fd, &epv) < 0){
+		printf("Event Del failed[fd=%d]\n", ev->fd);
+	} else{
+		printf("Event Del OK[fd=%d]\n", ev->fd);
+	}
 }
 
 int g_epollfd;
 myevent_s g_events[MAX_EVENTS+1];
 
 void accept_conn(int fd, int events, void *arg){
+	cout << "in " << __func__ <<endl;
 	struct sockaddr_in sin;
 	socklen_t len = sizeof(struct sockaddr_in);
 	int nfd, i;
@@ -119,13 +124,14 @@ void recv_data(int fd, int events, void *arg){
 		ev->buff[len] = '\0';
 		printf("recv[%d]:%s\n", fd, ev->buff);
 		event_set(ev, fd, send_data, ev);
+		//cout << __func__ << ":" <<endl;
 		event_add(g_epollfd, EPOLLOUT, ev);
 	} else if (len == 0){
-		close(ev->fd);
 		printf("[fd=%d] pos[%d], closed gracefully.\n", fd, ev-g_events);
-	} else {
 		close(ev->fd);
+	} else {
 		printf("recv[fd=%d] error[%d]:%s\n", fd, errno, strerror(errno));
+		close(ev->fd);
 	}
 }
 
@@ -139,12 +145,13 @@ void send_data(int fd, int events, void *arg){
 		if (ev->s_offset == ev->len){
 			event_del(g_epollfd, ev);
 			event_set(ev, fd, recv_data, ev);
+			//cout << __func__ <<":"<<endl;
 			event_add(g_epollfd, EPOLLIN, ev);
 		}
 	} else {
-		close(ev->fd);
-		event_del(g_epollfd, ev);
 		printf("send[fd=%d] error[%d]\n", fd, errno);
+		//event_del(g_epollfd, ev);
+		//close(ev->fd);
 	}
 }
 
@@ -164,6 +171,8 @@ void init_listen_socket(int epollfd, short port){
 }
 
 int main(int argc, char *argv[]){
+	cout<<"EPOLLIN:"<<EPOLLIN<<endl;
+	cout<<"EPOLLOUT:"<<EPOLLOUT<<endl;
 	unsigned short port = 12345;
 	if (argc == 2){
 		port = atoi(argv[1]);
@@ -191,6 +200,7 @@ int main(int argc, char *argv[]){
 			}
 		}
 		int fds = epoll_wait(g_epollfd, events, MAX_EVENTS, 1000);
+		cout<<"epoll_wait ret:"<<fds<<endl;
 		if (fds < 0){
 			printf("epoll_wait error, exit.\n");
 			break;
@@ -204,6 +214,7 @@ int main(int argc, char *argv[]){
 				ev->call_back(ev->fd, events[i].events, ev->arg);
 			}
 		}
+		sleep(2);
 	}
 	return 0;
 }

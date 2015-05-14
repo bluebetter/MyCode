@@ -17,6 +17,10 @@ test13.8.2:
 
 test_libevent:
 	g++ libevent.cpp -levent
+
+epoll:
+	g++ epoll.cpp
+
 clean:
 	rm -f a.out
 	rm -f ../output/*
