@@ -40,6 +40,7 @@ def get_isp(ip):
     html = page.read()
     #print html
     for item in re.findall(reg_info, html):
+        print 'item:', item
         print ("%s\t%s"%(ip, item.decode("gb2312").encode("utf-8")))
 
 def t_get_isp(tid):
