@@ -1,6 +1,33 @@
 #include <iostream>
+#include <vector>
 #include <string>
+#include <iterator>
+//#include <functional>
+#include <algorithm>
+#include <math.h>
 using namespace std;
+
+/*
+ * 16.5.2
+ */
+double mean(double a, double b){
+	return (a+b)/2;
+}
+void test_16p5p2(){
+	double data1[] = {1,2,3,4,5};
+	double data2[] = {6,7,8,9,10};
+	vector<double> v1,v2;
+	//copy(data1, data1+5, v1.begin());
+	v1.insert(v1.begin(), data1, data1+5);
+	v2.insert(v2.begin(), data2, data2+1);
+
+	ostream_iterator<double, char> out(cout, "\n");
+	//copy(v1.begin(), v1.end(), out);
+
+	//transform(v1.begin(), v1.end(), out, sqrt);
+	transform(v1.begin(), v1.end(), v2.begin(), out, mean);
+	return;
+}
 
 /*
  *
@@ -144,13 +171,14 @@ Star & Star::operator=(Star &s){
 void test_13p8p2(){
 	Star t;
 	string s = "ac";
-	t = s;
+	//t = s;
 	//t = Star(s);
 }
 
 int main()
 {
 	cout<<"This is a file doing test for <C++ Primer Plus>\n";
+
 #ifdef TEST_5P3
 	test_5p3();
 #endif
@@ -176,6 +204,10 @@ int main()
 
 #ifdef TEST_13P8P2
 	test_13p8p2();
+#endif
+
+#ifdef TEST_16P5P2
+	test_16p5p2();
 #endif
 	return 0;
 }

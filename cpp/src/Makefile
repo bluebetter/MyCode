@@ -1,6 +1,7 @@
 OUTPUT=../output/
 all:
-	g++ -DTEST_13P8P2 cpp_primer.cpp -o $(OUTPUT)/test_13.8.2.bin
+	g++ -DTEST_16P5P2 cpp_primer.cpp -o $(OUTPUT)/test_16.5.2.bin
+	#g++ -DTEST_13P8P2 cpp_primer.cpp -o $(OUTPUT)/test_13.8.2.bin
 	#g++ -DTEST_6P2 -DTEST_5P5P1 cpp_primer.cpp -lm
 	#g++ -DTEST_11P5P2 cpp_primer.cpp -o $(OUTPUT)/test_11.5.2.bin
 test:
@@ -14,6 +15,8 @@ test11.5.2:
 	g++ -DTEST_11P5P2 cpp_primer.cpp -o $(OUTPUT)/test_11.5.2.bin
 test13.8.2:
 	g++ -DTEST_13P8P2 cpp_primer.cpp -o $(OUTPUT)/test_13.8.2.bin
+test16.5.2:
+	g++ -DTEST_16P5P2 cpp_primer.cpp -o $(OUTPUT)/test_16.5.2.bin
 
 test_libevent:
 	g++ libevent.cpp -levent
